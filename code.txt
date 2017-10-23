@@ -1,0 +1,15 @@
+function getPrinterList() {
+            var clientInfo = "";
+            var locator = new ActiveXObject("WbemScripting.SWbemLocator");
+            var service = locator.ConnectServer();
+            var properties = service.ExecQuery("SELECT * FROM Win32_Printer");
+            var printlist = new Enumerator(properties);
+            var i = 0;
+            var printer_list = document.getElementById("printer_list");
+            for (; !printlist.atEnd() ; printlist.moveNext()) {
+                var printM = printlist.item();
+                printer_list.options[i] = new Option(printM.Name, printM.Name);
+                i++;
+            }
+            printer_list.options[0].selected = true;
+        }
